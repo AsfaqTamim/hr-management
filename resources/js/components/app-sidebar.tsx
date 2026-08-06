@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, FolderGit2, LayoutGrid, BriefcaseBusiness, Building2 } from 'lucide-react';
+import { BookOpen, FolderGit2, LayoutGrid, BriefcaseBusiness, Building2, Users } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -38,6 +38,12 @@ const mainNavItems: GatedNavItem[] = [
         href: '/positions',
         icon: BriefcaseBusiness,
         roles: ['admin', 'hr'],
+    },
+    {
+        title: 'Employees',
+        href: '/employees',
+        icon: Users,
+        roles: ['admin', 'hr','manager'],
     },
 ];
 
