@@ -53,4 +53,9 @@ class User extends Authenticatable implements PasskeyUser
     {
         return in_array($this->role, $roles, true);
     }
+
+    public function employee() : \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Employee::class);
+    }
 }
