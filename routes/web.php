@@ -5,6 +5,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LeaveRequestController;
 use App\Http\Controllers\LeaveTypeController;
+use App\Http\Controllers\PayslipController;
 use App\Http\Controllers\PositionController;
 use Illuminate\Support\Facades\Route;
 
@@ -62,6 +63,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('attendance', [AttendanceController::class, 'index'])->name('attendance.index');
     Route::post('attendance/clock-in', [AttendanceController::class, 'clockIn'])->name('attendance.clock-in');
     Route::post('attendance/clock-out', [AttendanceController::class, 'clockOut'])->name('attendance.clock-out');
+
+    // …HR, admins and managers see the company-wide timesheet.
+    Route::middleware('role:admin,hr,manager')->group(function () {
+        Route::get('timesheets', [AttendanceController::class, 'timesheets'])->name('timesheets.index');
+    });
+
+    // ── Payroll (HR & admins) ───────────────────────────────────────────────
+    Route::middleware('role:admin,hr')->group(function () {
+        Route::get('payslips', [PayslipController::class, 'index'])->name('payslips.index');
+        Route::post('payslips', [PayslipController::class, 'store'])->name('payslips.store');
+        Route::get('payslips/{payslip}', [PayslipController::class, 'show'])->name('payslips.show');
+    });
 });
 
 require __DIR__ . '/settings.php';
